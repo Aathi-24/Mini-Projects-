@@ -1,4 +1,4 @@
-#College Admission Form using TK inter and saving it in Mysql database from Python 
+#This is an College Admission Form using TK inter and saving it in Mysql database from Python 
 import mysql.connector
 from tkinter import *
 from tkinter.ttk import *
