@@ -1,0 +1,39 @@
+import os
+import shutil
+
+DOWNLOADS_PATH = os.path.expanduser("DownloadsThis PC\T3 Ultra\Internal storage\Download")
+
+FILE_TYPES = {
+    "Images": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"],
+    "Videos": [".mp4", ".mkv", ".avi", ".mov", ".webm"],
+    "Documents": [".pdf", ".docx", ".doc", ".txt", ".pptx", ".xlsx"],
+    "Music": [".mp3", ".wav", ".aac", ".flac"],
+    "Archives": [".zip", ".rar", ".7z", ".tar", ".gz"],
+    "Programs": [".exe", ".msi", ".dmg", ".apk"],
+    "Code": [".py", ".js", ".html", ".css", ".java", ".cpp"]
+}
+
+def organize_downloads():
+    for file in os.listdir(DOWNLOADS_PATH):
+        file_path = os.path.join(DOWNLOADS_PATH, file)
+
+        if os.path.isfile(file_path):
+            moved = False
+            _, extension = os.path.splitext(file.lower())
+
+            for folder, extensions in FILE_TYPES.items():
+                if extension in extensions:
+                    folder_path = os.path.join(DOWNLOADS_PATH, folder)
+                    os.makedirs(folder_path, exist_ok=True)
+                    shutil.move(file_path, folder_path)
+                    moved = True
+                    break
+                
+        if not moved:
+            other_path = os.path.join(DOWNLOADS_PATH, "Others")
+            os.makedirs(other_path, exist_ok=True)
+            shutil.move(file_path, other_path)
+
+if __name__ == "__main__":
+    organize_downloads()
+    print("Downloads folder organized successfully.")
